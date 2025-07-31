@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multiple Dropdowns</title>
+  <style>
+    .container {
+      display: flex;
+      gap: 24px;
+      padding: 40px;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .dropdown .content {
+      background-color: blue;
+      color: white;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      flex-direction: column;
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: all 300ms ease;
+    }
+
+    .dropdown .content.show {
+      opacity: 1;
+      height: auto;
+      padding: 20px;
+      pointer-events: auto;
+    }
+
+    .dropdown .content li {
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="dropdown">
+      <button onclick="toggleDropdown(this)">Dropdown 1</button>
+      <ul class="content">
+        <li>Option 1A</li>
+        <li>Option 1B</li>
+        <li>Option 1C</li>
+      </ul>
+    </div>
+
+    <div class="dropdown">
+      <button onclick="toggleDropdown(this)">Dropdown 2</button>
+      <ul class="content">
+        <li>Option 2A</li>
+        <li>Option 2B</li>
+        <li>Option 2C</li>
+      </ul>
+    </div>
+
+    <div class="dropdown">
+      <button onclick="toggleDropdown(this)">Dropdown 3</button>
+      <ul class="content">
+        <li>Option 3A</li>
+        <li>Option 3B</li>
+        <li>Option 3C</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown(button) {
+      const dropdown = button.closest(".dropdown");
+      const content = dropdown.querySelector(".content");
+
+      // Ferme tous les autres dropdowns
+      document.querySelectorAll(".dropdown .content").forEach(el => {
+        if (el !== content) el.classList.remove("show");
+      });
+
+      // Toggle celui qu'on a cliqué
+      content.classList.toggle("show");
+    }
+
+    // Fermer si on clique en dehors
+    document.addEventListener("click", function(e) {
+      if (!e.target.closest(".dropdown")) {
+        document.querySelectorAll(".dropdown .content").forEach(el => {
+          el.classList.remove("show");
+        });
+      }
+    });
+  </script>
+</body>
+</html>
